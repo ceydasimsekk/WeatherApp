@@ -1,4 +1,4 @@
-package com.ceydanursimsek.weatherapp;
+package com.ceydanursimsek.weatherapp.view;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -9,12 +9,12 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.ceydanursimsek.weatherapp.R;
 import com.ceydanursimsek.weatherapp.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         if (!(input.equals(gmail)) && !(input.equals(username)) || !(Password.equals(password))) {
             binding.username.setTextColor(Color.RED);
             binding.password.setTextColor(Color.RED);
+            Toast.makeText(this, "username or password is wrong", Toast.LENGTH_SHORT).show();
             hasError = true;  // Hata var
         }
 
