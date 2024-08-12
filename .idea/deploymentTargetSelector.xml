@@ -15,7 +15,7 @@
       </SelectionState>
       <SelectionState runConfigName="MapsActivity">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-08-11T14:07:29.235083500Z">
+        <DropdownSelection timestamp="2024-08-12T06:38:28.464659800Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\ceyda\.android\avd\Pixel_4_API_33.avd" />

@@ -72,7 +72,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson)).build();
 
-        loadData();
     }
 
     @Override
@@ -87,16 +86,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onLocationChanged(@NonNull Location location) {//konum değiştiğinde ne yapacak
 
                 LatLng currentLoc = new LatLng(location.getLatitude(), location.getLongitude());
-                if (!isCameraMoved) {
-                    // Kamerayı sadece bir kez hareket ettir
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 15));
+
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 14));
                     isCameraMoved = true; // Kamerayı hareket ettirdiğini belirt
-                }
+
                     mMap.addMarker(new MarkerOptions().position(currentLoc).title("You are here."));
 
-
-                String locationInfo = String.format("Lat: %.2f, Lng: %.2f", location.getLatitude(), location.getLongitude());
-                binding.phoneLocation.setText(locationInfo);
+                loadData(location.getLatitude(),location.getLongitude(),false);
+                /*String locationInfo = String.format("Lat: %.2f, Lng: %.2f", location.getLatitude(), location.getLongitude());
+                binding.phoneLocation.setText(locationInfo);*/
             }
         };
 
@@ -118,7 +116,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         }else{
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,20000,locationListener);
         }
 
         /*// Add a marker in Sydney and move the camera
@@ -133,7 +131,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if(o){
                     if(ContextCompat.checkSelfPermission(MapsActivity.this,Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED){
                         //izin verildi permission granted
-                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);}
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,20000,locationListener);}
                 }else{
                     //permission denied
                     Toast.makeText(MapsActivity.this, "Permission needed", Toast.LENGTH_SHORT).show();
@@ -142,9 +140,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
     }
-    private void loadData(){
+    private void loadData(double latitude, double longitude,boolean isForSelectedLocation){
         WeatherAPI weatherAPI = retrofit.create(WeatherAPI.class);
-        Call<WeatherResponse> call=weatherAPI.getCurrentWeather(39.89,32.75,API_KEY);
+        Call<WeatherResponse> call=weatherAPI.getCurrentWeather(latitude,longitude,API_KEY);
 
         call.enqueue(new Callback<WeatherResponse>() {
             @Override
@@ -152,14 +150,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if(response.isSuccessful()){
                 WeatherResponse weatherResponse=new WeatherResponse();
                 weatherResponse=response.body();
-                System.out.println(weatherResponse.getTimezone());
-                System.out.println(weatherResponse.getCurrent().getTemp());}
+                if(weatherResponse!=null){
+
+                    String weatherInfo = String.format("%s,%.2f°C, %.0f",
+                            weatherResponse.getTimezone(),
+                            (weatherResponse.getCurrent().getTemp())-273.15,    // %.2f -> Double değer, iki ondalık basamaklı olarak gösterilir.
+                            weatherResponse.getCurrent().getHumidity() // %.0f -> Double değer, tam sayı gibi gösterilir.
+                    );
+
+                    if(isForSelectedLocation){
+                        binding.selectedLocation.setText(weatherInfo);
+                    }else{
+                        binding.phoneLocation.setText(weatherInfo);
+                    }
+
+
+
+                }else{
+                    System.out.println("response code:"+response.code());
+                }
+                }
 
             }
 
             @Override
             public void onFailure(Call<WeatherResponse> call, Throwable t) {
-
+                System.out.println("API call failed: " + t.getMessage());
             }
         });
 
@@ -169,6 +185,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapLongClick(@NonNull LatLng latLng) {
         mMap.clear();
         mMap.addMarker(new MarkerOptions().position(latLng)); //tıklanılan yere marker koy
+
+        loadData(latLng.latitude, latLng.longitude,true);
+
+
+
 
     }
 }

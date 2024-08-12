@@ -82,7 +82,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
-
+            //public void beforeTextChanged(CharSequence charSequence, int start, int before, int count)
+            /* charSequence: Kullanıcının girmeden önceki mevcut metin. EditText'teki mevcut metni temsil eder.
+            start: Metindeki değişikliklerin başlangıç indeksini belirtir.
+            before: EditText'ten kaldırılan metin miktarını belirtir.
+            count: EditText'e eklenen yeni metin miktarını belirtir*/
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 binding.username.setTextColor(Color.BLACK);  // Rengi siyaha döndürme
