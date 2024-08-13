@@ -9,7 +9,7 @@ Weather App, Android Studio ve Java kullanılarak geliştirilmiş basit bir hava
 
 | 📱 Giriş Ekranı | 🗺️ Harita Ekranı |
 |:---------------:|:----------------:|
-| ![Giriş Ekranı](https://github.com/ceydasimsekk/WeatherApp/blob/main/screenshots/1.jpeg) | ![Harita Ekranı](https://github.com/ceydasimsekk/WeatherApp/blob/main/screenshots/3.jpeg) |
+| ![Giriş Ekranı](https://github.com/ceydasimsekk/WeatherApp/blob/main/screenshots/1.jpeg) | ![Harita Ekranı](https://github.com/ceydasimsekk/WeatherApp/blob/main/screenshots/2.jpeg) |
 
 
 
