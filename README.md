@@ -14,7 +14,7 @@ Weather App, Android Studio ve Java kullanılarak geliştirilmiş basit bir hava
   <!-- Giriş Ekranı -->
   <div style="text-align: center; margin-right: 20px;">
     <h3>📱 Giriş Ekranı</h3>
-    <img src="https://github.com/kullanıcı-adı/repository-adı/raw/branch-adı/klasör-adı/görsel1.ext" alt="Giriş Ekranı" width="300">
+    <img src="https://github.com/ceydasimsekk/WeatherApp/blob/main/screenshots/1.jpeg" alt="Giriş Ekranı" width="300">
   </div>
   
   <!-- Harita Ekranı -->
